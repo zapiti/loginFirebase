@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        FirebaseApp.configure()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        UINavigationBar.appearance().barTintColor = UIColor.orange
+        
+        let mainVC = MainController()
+        let leftVC = LeftViewController()
+        
+        let mainVCNavC = UINavigationController(rootViewController: mainVC)
+        
+        let slideMenuController = SlideMenuController(
+            mainViewController: mainVCNavC,
+            leftViewController: leftVC
+        )
+        slideMenuController.mainNavigationBarLeftToggleButtonIcon = UIImage(named: "ic_menu")
+        slideMenuController.allowedRightSwipe = false
+        
+        window?.rootViewController = slideMenuController
+        
         return true
     }
 
